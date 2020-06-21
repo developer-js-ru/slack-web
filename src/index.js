@@ -11,7 +11,7 @@ import { Provider, connect } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import rootReducer from './store/redusers'
-import { setUser } from './store/actions'
+import { setUser, clearUser } from './store/actions'
 
 import Spinner from './Spinner'
 
@@ -28,6 +28,9 @@ class Root extends Component {
       if (user) {
         this.props.setUser(user)
         this.props.history.push('/')
+      } else {
+        this.props.history.push('/login')
+        this.props.clearUser()
       }
     })
   }
@@ -51,7 +54,7 @@ const mapStateToProps = state => {
   }
 }
 
-const RootWithAuth = withRouter(connect(mapStateToProps, { setUser })(Root))
+const RootWithAuth = withRouter(connect(mapStateToProps, { setUser, clearUser })(Root))
 
 ReactDOM.render(
   <Provider store={store}>
